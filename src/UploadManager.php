@@ -32,7 +32,7 @@ class UploadManager
      * @param string $path
      * @return UploadManager
      */
-    public function send($files, $path)
+    public function add($files, $path)
     {
         if (is_array($files)) {
             foreach ($files as $file) {
@@ -56,7 +56,7 @@ class UploadManager
      */
     public function syncSend($files, $path)
     {
-        return $this->send($files, $path)->execute();
+        return $this->add($files, $path)->send();
     }
 
     /**
@@ -64,7 +64,7 @@ class UploadManager
      *
      * @return array<Response>
      */
-    public function execute()
+    public function send()
     {
         $result = array();
         $toBeDispatched = $this->tasks;
@@ -88,7 +88,7 @@ class UploadManager
                 $this->endpoint,
                 $this->key
             ),
-            $task->getFilename()
+            $task
         );
     }
 
@@ -106,8 +106,8 @@ class UploadManager
                 $this->publicPrefix . $task->getCloudFilePath()
             );
 
-            if (isset($this->tasks[$task->getFileName()])) {
-                unset($this->tasks[$task->getFileName()]);
+            if (isset($this->tasks[$task->getFilePath()])) {
+                unset($this->tasks[$task->getFilePath()]);
             }
         }
 
@@ -124,7 +124,7 @@ class UploadManager
     private function registerTask($file, $path)
     {
         try {
-            return $this->task[$file] = new Task($file, $path);
+            return $this->tasks[$file] = new Task($file, $path);
         } catch (\Exception $err) {
             throw $err;
         }
@@ -136,7 +136,7 @@ class UploadManager
     public function __destruct()
     {
         if (!empty($this->tasks)) {
-            $this->execute();
+            $this->send();
         }
 
         unset($this->tasks);

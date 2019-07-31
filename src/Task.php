@@ -25,17 +25,27 @@ class Task
      */
     public function getCloudFilePath()
     {
-        return $this->cloudPath . $this->file;
+        return $this->cloudPath . $this->getFileName();
     }
 
     /**
-     * get the filename, usualy for indexing purpose
+     * get the filepath, usualy for indexing purpose
      *
-     * @return void
+     * @return string
+     */
+    public function getFilepath()
+    {
+        return $this->file;
+    }
+
+    /**
+     * get the file basename, usualy for cloud related
+     *
+     * @return string
      */
     public function getFileName()
     {
-        return $this->file;
+        return \pathinfo($this->file, PATHINFO_BASENAME);
     }
 
     /**

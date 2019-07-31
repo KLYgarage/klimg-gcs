@@ -13,7 +13,7 @@ class Response
     private $info;
     private $err;
 
-    private $result;
+    private $publicUrl;
 
 
     public function __construct($success, $info, $err)
