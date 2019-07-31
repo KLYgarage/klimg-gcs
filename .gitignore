@@ -5,3 +5,4 @@ composer.phar
 .swp
 .log
 docker-composer-install.sh
+.env

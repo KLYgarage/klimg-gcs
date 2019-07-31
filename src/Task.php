@@ -28,11 +28,23 @@ class Task
         return $this->cloudPath . $this->file;
     }
 
+    /**
+     * get the filename, usualy for indexing purpose
+     *
+     * @return void
+     */
     public function getFileName()
     {
         return $this->file;
     }
 
+    /**
+     * dispatch the curl task to post the content
+     *
+     * @param string $endpoint
+     * @param string $key
+     * @return Response
+     */
     public function dispatch($endpoint, $key)
     {
         $delimiter = '-------------' . \uniqid();
@@ -60,10 +72,10 @@ class Task
             )
         );
 
-        $result = array(
-            'success' => \curl_exec($curlHandler),
-            'info' => \curl_getinfo($curlHandler),
-            'err' => \curl_error($curlHandler)
+        $result = new Response(
+            \curl_exec($curlHandler),
+            \curl_getinfo($curlHandler),
+            \curl_error($curlHandler)
         );
 
         \curl_close($curlHandler);

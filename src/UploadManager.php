@@ -76,13 +76,13 @@ class UploadManager
     /**
      * handle and filter out task response
      *
-     * @param array $response
+     * @param Response $response
      * @param string $filename
      * @return array
      */
     private function handleResponse($response, $task)
     {
-        if ($response['success']) {
+        if ($response->isSuccess()) {
             $cloudPath = $task->getCloudFilePath();
 
             if (isset($this->tasks[$task->getFileName()])) {
@@ -90,14 +90,14 @@ class UploadManager
             }
 
             return array(
-                'success' => true,
+                'success' => $response->isSuccess(),
                 'public_url' => $this->publicPrefix . $cloudPath
             );
         }
 
         return array(
-            'success' => false,
-            'err' => $response['err']
+            'success' => $response->isSuccess(),
+            'err' => $response->getError()
         );
     }
 
