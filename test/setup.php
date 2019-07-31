@@ -14,9 +14,11 @@ $manager = new UploadManager(
     getenv('GCS_PUBLIC_PREFIX')
 );
 
-$manager->add(__DIR__ . '/images/one.jpg', 'test3');
-$manager->add(__DIR__ . '/images/two.jpg', 'test3');
-$manager->add(__DIR__ . '/images/three.jpg', 'test3');
+$manager->add(array(
+    __DIR__ . '/images/one.jpg',
+    __DIR__ . '/images/two.jpg',
+    __DIR__ . '/images/three.jpg'
+), 'test4');
 
 $resps = $manager->send();
 
