@@ -16,5 +16,8 @@
     "psr-4": {
       "Klimg\\GCS\\": "src/"
     }
+  },
+  "require-dev": {
+    "vlucas/phpdotenv": "v2.6.1"
   }
 }

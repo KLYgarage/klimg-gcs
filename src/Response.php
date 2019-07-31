@@ -13,6 +13,8 @@ class Response
     private $info;
     private $err;
 
+    private $result;
+
 
     public function __construct($success, $info, $err)
     {
@@ -34,5 +36,19 @@ class Response
     public function getError()
     {
         return $this->err;
+    }
+
+    public function setResult($publicUrl)
+    {
+        $this->publicUrl = $publicUrl;
+    }
+
+    public function __toString()
+    {
+        if ($this->isSuccess()) {
+            return $this->publicUrl;
+        }
+
+        return '';
     }
 }

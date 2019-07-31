@@ -16,15 +16,22 @@ class UploadManager
     private $tasks;
 
     public function __construct(
-        $endpoint = self::DEFAULT_ENDPOINT,
-        $key = self::DEFAULT_KEY,
-        $publicPrefix = ''
+        $endpoint,
+        $key,
+        $publicPrefix = 'https://cdns.klimg.com/some-gcs-bucket/'
     ) {
         $this->endpoint = $endpoint;
         $this->key = $key;
         $this->publicPrefix = $publicPrefix;
     }
 
+    /**
+     * poll the files to be send later
+     *
+     * @param array|string $files
+     * @param string $path
+     * @return UploadManager
+     */
     public function send($files, $path)
     {
         if (is_array($files)) {
@@ -40,17 +47,29 @@ class UploadManager
         return $this;
     }
 
+    /**
+     * send the file syncedly, without polling
+     *
+     * @param array|string $files
+     * @param string $path
+     * @return UploadManager
+     */
     public function syncSend($files, $path)
     {
-        return $this->send($files, $path)->executeAll();
+        return $this->send($files, $path)->execute();
     }
 
-    public function executeAll()
+    /**
+     * execute the tasklist
+     *
+     * @return array<Response>
+     */
+    public function execute()
     {
         $result = array();
         $toBeDispatched = $this->tasks;
         foreach ($toBeDispatched as $filename => $task) {
-            $result[$filename] = $this->execute($task);
+            $result[$filename] = $this->dispatch($task);
         }
 
         return $result;
@@ -60,9 +79,9 @@ class UploadManager
      * execute the task
      *
      * @param Task $task
-     * @return array
+     * @return Response
      */
-    public function execute($task)
+    public function dispatch($task)
     {
         return $this->handleResponse(
             $task->dispatch(
@@ -78,27 +97,21 @@ class UploadManager
      *
      * @param Response $response
      * @param string $filename
-     * @return array
+     * @return Response
      */
     private function handleResponse($response, $task)
     {
         if ($response->isSuccess()) {
-            $cloudPath = $task->getCloudFilePath();
+            $response->setResult(
+                $this->publicPrefix . $task->getCloudFilePath()
+            );
 
             if (isset($this->tasks[$task->getFileName()])) {
                 unset($this->tasks[$task->getFileName()]);
             }
-
-            return array(
-                'success' => $response->isSuccess(),
-                'public_url' => $this->publicPrefix . $cloudPath
-            );
         }
 
-        return array(
-            'success' => $response->isSuccess(),
-            'err' => $response->getError()
-        );
+        return $response;
     }
 
     /**
@@ -115,5 +128,17 @@ class UploadManager
         } catch (\Exception $err) {
             throw $err;
         }
+    }
+
+    /**
+     * clean up tasklist one last time before destruction
+     */
+    public function __destruct()
+    {
+        if (!empty($this->tasks)) {
+            $this->execute();
+        }
+
+        unset($this->tasks);
     }
 }

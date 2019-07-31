@@ -6,3 +6,4 @@ composer.phar
 .log
 docker-composer-install.sh
 .env
+test/images/**.*
