@@ -1,0 +1,7 @@
+composer.phar
+/vendor/
+.cache
+.ignore
+.swp
+.log
+docker-composer-install.sh

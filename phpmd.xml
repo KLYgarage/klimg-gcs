@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="dream_phpmd_ruleset"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+<description>Dream coding rules. Mess detection and prevention.
+</description>
+<rule ref="rulesets/cleancode.xml">
+    <exclude name="StaticAccess" />
+    <exclude name="ElseExpression" />
+</rule>
+<rule ref="rulesets/codesize.xml/CyclomaticComplexity"/>
+<rule ref="rulesets/codesize.xml/NPathComplexity">
+    <properties>
+        <property name="minimum" value="180"/>
+    </properties>
+</rule>
+<rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/>
+<rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+    <properties>
+        <property name="minimum" value="2000"/>
+    </properties>
+</rule>
+<rule ref="rulesets/codesize.xml/ExcessiveParameterList"/>
+<rule ref="rulesets/codesize.xml/ExcessivePublicCount">
+    <properties>
+        <property name="minimum" value="24"/>
+    </properties>
+</rule>
+<rule ref="rulesets/codesize.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="24"/>
+    </properties>
+</rule>
+<rule ref="rulesets/codesize.xml/TooManyMethods">
+    <properties>
+        <property name="maxmethods" value="24"/>
+    </properties>
+</rule>
+<rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+    <properties>
+        <property name="maximum" value="48"/>
+    </properties>
+</rule>
+<rule ref="rulesets/controversial.xml">
+    <exclude name="CamelCaseClassName" />
+    <exclude name="CamelCasePropertyName" />
+    <exclude name="CamelCaseMethodName" />
+    <exclude name="CamelCaseParameterName" />
+    <exclude name="CamelCaseVariableName" />
+</rule>
+<rule ref="rulesets/design.xml/ExitExpression"/>
+<rule ref="rulesets/design.xml/EvalExpression"/>
+<rule ref="rulesets/design.xml/GotoStatement"/>
+<rule ref="rulesets/design.xml/NumberOfChildren">
+    <properties>
+        <property name="minimum" value="24"/>
+    </properties>
+</rule>
+<rule ref="rulesets/design.xml/DepthOfInheritance">
+    <properties>
+        <property name="minimum" value="8"/>
+    </properties>
+</rule>
+<rule ref="rulesets/design.xml/CouplingBetweenObjects"/>
+<rule ref="rulesets/naming.xml/ShortVariable">
+    <properties>
+        <property name="minimum" value="2"/>
+    </properties>
+</rule>
+<rule ref="rulesets/naming.xml/LongVariable">
+    <properties>
+        <property name="maximum" value="24"/>
+    </properties>
+</rule>
+<rule ref="rulesets/naming.xml/ShortMethodName">
+    <properties>
+        <property name="minimum" value="2"/>
+    </properties>
+</rule>
+<rule ref="rulesets/naming.xml/ConstructorWithNameAsEnclosingClass"/>
+<rule ref="rulesets/naming.xml/ConstantNamingConventions"/>
+<rule ref="rulesets/naming.xml/BooleanGetMethodName"/>
+<rule ref="rulesets/unusedcode.xml"/>
+</ruleset>

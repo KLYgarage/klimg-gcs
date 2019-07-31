@@ -1,0 +1,20 @@
+{
+  "name": "kly/klimg-gcs",
+  "description": "GCS upload manager lib for kly",
+  "type": "library",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    {
+      "name": "Charis",
+      "email": "me@chars.me"
+    }
+  ],
+  "require": {
+    "php": "^5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Klimg\\GCS\\": "src/"
+    }
+  }
+}
