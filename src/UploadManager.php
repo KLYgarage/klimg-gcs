@@ -124,7 +124,8 @@ class UploadManager
     private function registerTask($file, $path)
     {
         try {
-            return $this->tasks[$file] = new Task($file, $path);
+            $task = new Task($file, $path);
+            return $this->tasks[$task->getCloudFilePath()] = $task;
         } catch (\Exception $err) {
             throw $err;
         }
