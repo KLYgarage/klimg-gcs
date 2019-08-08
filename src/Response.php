@@ -23,21 +23,42 @@ class Response
         $this->err = $err;
     }
 
+    /**
+     * success response or not
+     *
+     * @return boolean
+     */
     public function isSuccess()
     {
         return $this->success;
     }
 
+    /**
+     * info fromresponse
+     *
+     * @return array
+     */
     public function getInfo()
     {
         return $this->info;
     }
 
+    /**
+     * error notif message
+     *
+     * @return array
+     */
     public function getError()
     {
         return $this->err;
     }
 
+    /**
+     * set the public url result for ease of mapping
+     *
+     * @param string $publicUrl
+     * @return void
+     */
     public function setResult($publicUrl)
     {
         $this->publicUrl = $publicUrl;

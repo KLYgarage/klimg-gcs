@@ -2,6 +2,9 @@
 
 namespace Klimg\GCS;
 
+/**
+ * UploadManager
+ */
 class UploadManager
 {
     private $key;

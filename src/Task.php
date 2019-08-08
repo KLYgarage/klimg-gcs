@@ -4,6 +4,9 @@ namespace Klimg\GCS;
 
 use Exception;
 
+/**
+ * Task class
+ */
 class Task
 {
     private $file;
